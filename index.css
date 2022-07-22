@@ -38,8 +38,8 @@ body {
     content: "Calculator is off";
     font-style: italic;
     position: absolute;
-    left: 10px;
-    top: 30%;
+    left: 8px;
+    top: 8px;
     translate: translateY(-50%);
 }
 
@@ -47,7 +47,7 @@ body {
     margin-bottom: .75rem;
 }
 
-input, button {
+.input, button {
     background-color: transparent;
     border: 3px dashed darkgoldenrod;
     color: darkgoldenrod;
@@ -56,15 +56,37 @@ input, button {
     font-size: 1.2rem;
 }
 
+input, #result {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 3px;
+    padding-bottom: 5px;
+}
+
 input {
     width: calc(100% - 22px);
-    padding: 15px 8px;
+    background-color: transparent;
+    padding-top: 10px;
+    border: 0;
+    color: inherit;
+    font-size: inherit;
+}
+
+#result {
+    text-align: right;
+    font-weight: normal;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 button {
-    padding: 12px 20px;
+    text-align: center;
+    line-height: 50px;
     width: 55px;
     height: 55px;
+    cursor: pointer;
 }
 
 .buttons {
@@ -80,6 +102,7 @@ button {
 .buttons .extra button {
     display: block;
 }
+
 button.span-2 {
     min-height: 122px;
 }
@@ -93,11 +116,12 @@ button.span-2-h {
     justify-content: space-between;
 }
 
-button::active, 
+button:active, 
 button:focus,
 button:hover {
     border-style: solid;
     background-color: darkgoldenrod;
+    color: inherit;
 }
 
 h1 {

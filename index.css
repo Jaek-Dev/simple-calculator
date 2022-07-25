@@ -53,7 +53,7 @@ body {
     color: darkgoldenrod;
     border-radius: 8px;
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: 1.2rem; 
 }
 
 input, #result {

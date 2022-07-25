@@ -70,7 +70,7 @@ if(calculator && input && result) {
         }
 
         setInput();
-        return calculator.classList.toggle('off');
+        return calculator.classList.toggle('off'); 
     }
     const previousVal = key => {
         if(r[key].length < 2)

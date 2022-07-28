@@ -16,16 +16,14 @@ if(calculator && input && result) {
             console.log('You should calculate bro');
             return;
         }
-        r.a = ` ${value} `;
-        console.log(r);
+        r.a = value;
         return setInput();
     }
     const hasAction = () => r.a.trim().length;
-    const setInput = () => input.value = `${r.f}${r.a}${r.l}`;
+    const setInput = () => input.value = `${r.f} ${r.a} ${r.l}`;
     const getFinal = () => `${r.f}${r.a}${r.l}`;
     const calculate = (showResult = true) => {
         try {
-            console.log(getFinal());
             const res = eval(getFinal());
             const formatter = new Intl.NumberFormat('en-US');
             if(showResult) result.innerText = formatter.format(res);
@@ -59,15 +57,9 @@ if(calculator && input && result) {
         return 'f';
     }
     const toggleOn = () => {
-        if(isOff()) {
-            r.f = '0';
-            r.a = '';
-            r.l = '';
-        } else {
-            r.f = '';
-            r.a = '';
-            r.l = '';
-        }
+        r.f = isOff() ? '0' : '';
+        r.a = r.l = '';
+        result.innerHTML = '&nbsp;';
 
         setInput();
         return calculator.classList.toggle('off'); 
@@ -106,11 +98,11 @@ if(calculator && input && result) {
         } else {
             r[key] = r[key].substring(
                 0, r[key].length - 1
-            );
+            ).trim();
         } return setInput();
     }
     const press = value => {
-        const key = getKey();
+      const key = getKey();
         console.log(key);
         if(
             previousVal(key) == 0 &&

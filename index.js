@@ -16,7 +16,7 @@ if(calculator && input && result) {
             console.log('You should calculate bro');
             return;
         }
-        r.a = value;
+        r.a = value; 
         return setInput();
     }
     const hasAction = () => r.a.trim().length;

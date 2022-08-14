@@ -33,29 +33,7 @@ if(calculator && input && result) {
             return null;
         }
     }
-    const getNextKey = () => {
-        if(
-            r.f.length && 
-            r.a.length
-        ) return 'l';
-        if(
-            r.f.length && 
-            !r.a.length
-        ) return 'a';
-        return 'f';
-    }
-    const getKey = () => {
-        if(
-            r.f.length && 
-            r.a.length && 
-            r.l.length
-        ) return 'l';
-        if(
-            r.f.length && 
-            r.a.length && !r.a.length > 1
-        ) return 'a';
-        return 'f';
-    }
+    const getKey = () => r.c.length ? 'b' : 'a';
     const toggleOn = () => {
         r.f = isOff() ? '0' : '';
         r.a = r.l = '';
@@ -72,20 +50,26 @@ if(calculator && input && result) {
             r[key].length
         );
     }
+
+    /**
+     * 
+     * @param {*} key The key to set at result (r) object
+     * @param {*} value The value to set at result (r) object
+     * @returns void
+     */
     const setValue = (key, value) => {
-        console.log('key to set', key);
         if(value === '=') {
             calculate();
             return;
         }
 
-        if(['+', '-', '/', '*'].includes(value))
+        if(c.includes(value))
         return setAction(value);
 
         if(
             r[key].length === 1 && 
-            previousVal(key) == 0 &&
-            !['.', ...c].includes(value)
+            parseInt(previousVal(key)) === 0 &&
+            value !== '.'
         ) r[key] = value
         else r[key] = r[key] + value;
         return setInput();
@@ -105,27 +89,37 @@ if(calculator && input && result) {
 
     //Pressing a number
     const press = value => {
+        //Get the current key to be used for evaluation
         const key = getKey();
-        const nextKey = getNextKey();
+
+        /**
+         * 
+         */
         if(
-            previousVal(key) == 0 &&
+            !parseFloat(previousVal(key)) &&
             input.value.length === 1 &&
             value === '='
         ) return;
 
+        /**
+         * 
+         */
         if(
             previousVal(key) === '.' &&
             ['+', '-', '*', '/'].includes(value)
         ) return;
 
+        /**
+         * 
+         */
         if(
             parseInt(value) === 0 && 
             input.value.length === 1 &&
             previousVal(key) == 0
         ) return;
 
-        console.log(value);
-        // return setValue(key, value);
+        console.log(`value: ${value},`, `current key: ${key},`);
+        return setValue(key, value);
     }
     
     
@@ -142,7 +136,7 @@ if(calculator && input && result) {
                     if (value === 'a/c') return toggleOn();
                     if(isOff()) return alert('Calculator is off! Please turn it on first.');
                     if(value === 'c') return clear(getKey());
-                    if(value === '=') return calculate();
+                    // if(value === '=') return calculate();
                     return press(value);
                 }
             );

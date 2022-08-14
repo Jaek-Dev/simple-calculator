@@ -3,9 +3,9 @@ const input = document.querySelector('input');
 const result = document.getElementById('result');
 const c = ['+', '-', '*', '/'];
 const r = {
-    f: '',
-    l: '',
     a: '',
+    b: '',
+    c: '',
 }
 
 if(calculator && input && result) {
@@ -52,7 +52,7 @@ if(calculator && input && result) {
         ) return 'l';
         if(
             r.f.length && 
-            r.a.length
+            r.a.length && !r.a.length > 1
         ) return 'a';
         return 'f';
     }
@@ -73,6 +73,7 @@ if(calculator && input && result) {
         );
     }
     const setValue = (key, value) => {
+        console.log('key to set', key);
         if(value === '=') {
             calculate();
             return;
@@ -101,9 +102,11 @@ if(calculator && input && result) {
             ).trim();
         } return setInput();
     }
+
+    //Pressing a number
     const press = value => {
-      const key = getKey();
-        console.log(key);
+        const key = getKey();
+        const nextKey = getNextKey();
         if(
             previousVal(key) == 0 &&
             input.value.length === 1 &&
@@ -120,7 +123,9 @@ if(calculator && input && result) {
             input.value.length === 1 &&
             previousVal(key) == 0
         ) return;
-        return setValue(key, value);
+
+        console.log(value);
+        // return setValue(key, value);
     }
     
     
@@ -133,17 +138,11 @@ if(calculator && input && result) {
             btn.addEventListener(
                 'click', e => {
                     const value = e.target.innerText.toLowerCase();
-                    /* 
-                    First check if calculator os on
-                    */
-                    if (value === 'a/c') {
-                        //Just turn on the calculator
-                        return toggleOn();
-                    }
-                    if(isOff()) {
-                        return alert('Calculator is off! Please turn it on first.');
-                    }
+                    
+                    if (value === 'a/c') return toggleOn();
+                    if(isOff()) return alert('Calculator is off! Please turn it on first.');
                     if(value === 'c') return clear(getKey());
+                    if(value === '=') return calculate();
                     return press(value);
                 }
             );

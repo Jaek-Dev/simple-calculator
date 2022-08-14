@@ -18,22 +18,23 @@ if(calculator && input && result) {
             reset(calculated);
             //Add the value to a
             r.c = value;
-            //Then update what users can see
-            setInput();
             return;
         }
         r.c = value; 
         return setInput();
     }
     const reset = (value = 0) => {
+        console.log('from reset function', value);
         r.a = String(value);
         r.b = r.c = '';
 
         setResult();
+        setInput();
     }
     const setInput = () => input.value = `${r.a} ${r.c} ${r.b}`;
     const setResult = (res = '&nbsp;') => result.innerHTML = res;
     const getFinal = () => `${r.a}${r.c}${r.b}`;
+    const isCalculated = () => Boolean(r.a.length && r.c.length && r.b.length && result.innerHTML.length && result.innerHTML !== '&nbsp;');
     const calculate = (showResult = true) => {
         try {
             const res = eval(getFinal());
@@ -130,8 +131,8 @@ if(calculator && input && result) {
             input.value.length === 1 &&
             previousVal(key) == 0
         ) return;
-
-        return setValue(key, value);
+        
+        return isCalculated() ? reset(value) : setValue(key, value);
     }
     
     

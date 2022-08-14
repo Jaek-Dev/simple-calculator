@@ -34,7 +34,7 @@ if(calculator && input && result) {
     const setInput = () => input.value = `${r.a} ${r.c} ${r.b}`;
     const setResult = (res = '&nbsp;') => result.innerHTML = res;
     const getFinal = () => `${r.a}${r.c}${r.b}`;
-    const isCalculated = () => Boolean(r.a.length && r.c.length && r.b.length && result.innerHTML.length && result.innerHTML !== '&nbsp;');
+    const isCalculated = () => Boolean(result.innerHTML.length && result.innerHTML !== '&nbsp;');
     const calculate = (showResult = true) => {
         try {
             const res = eval(getFinal());
@@ -90,8 +90,9 @@ if(calculator && input && result) {
     }
     const clear = key => {
         if(!key) return;
+        console.log(key);
         if(r[key].length < 2) {
-            if(['a', 'l'].includes(key)) 
+            if(['b', 'c'].includes(key)) 
             r[key] = '';
             else r[key] = '0';
         } else {
@@ -110,17 +111,18 @@ if(calculator && input && result) {
          * 
          */
         if(
-            !parseFloat(previousVal(key)) &&
+            previousVal(key) == 0 &&
             input.value.length === 1 &&
             value === '='
         ) return;
 
         /**
-         * 
+         * Check if the clicked button is dot (.)
+         * or the current key value has a dot (.)
          */
         if(
-            previousVal(key) === '.' &&
-            ['+', '-', '*', '/'].includes(value)
+            value === '.' &&
+            r[key].includes('.')
         ) return;
 
         /**

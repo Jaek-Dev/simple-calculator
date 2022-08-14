@@ -12,31 +12,43 @@ if(calculator && input && result) {
     const btns = document.querySelectorAll('button');
     const isOff = () => calculator.classList.contains('off');
     const setAction = value => {
-        if(r.a.length && r.a.length && r.l.length) {
-            console.log('You should calculate bro');
+        if(r.a.length && r.c.length && r.b.length) {
+            const calculated = calculate(false);
+            //Reset the calculator with the result`
+            reset(calculated);
+            //Add the value to a
+            r.c = value;
+            //Then update what users can see
+            setInput();
             return;
         }
-        r.a = value; 
+        r.c = value; 
         return setInput();
     }
-    const hasAction = () => r.a.trim().length;
-    const setInput = () => input.value = `${r.f} ${r.a} ${r.l}`;
-    const getFinal = () => `${r.f}${r.a}${r.l}`;
+    const reset = (value = 0) => {
+        r.a = String(value);
+        r.b = r.c = '';
+
+        setResult();
+    }
+    const setInput = () => input.value = `${r.a} ${r.c} ${r.b}`;
+    const setResult = (res = '&nbsp;') => result.innerHTML = res;
+    const getFinal = () => `${r.a}${r.c}${r.b}`;
     const calculate = (showResult = true) => {
         try {
             const res = eval(getFinal());
             const formatter = new Intl.NumberFormat('en-US');
-            if(showResult) result.innerText = formatter.format(res);
+            if(showResult) setResult(formatter.format(res));
             return res;
         } catch(e) {
-            result.innerText = 'ERROR';
+            setResult('ERROR');
             return null;
         }
     }
     const getKey = () => r.c.length ? 'b' : 'a';
     const toggleOn = () => {
-        r.f = isOff() ? '0' : '';
-        r.a = r.l = '';
+        r.a = isOff() ? '0' : '';
+        r.b = r.c = '';
         result.innerHTML = '&nbsp;';
 
         setInput();
@@ -72,6 +84,7 @@ if(calculator && input && result) {
             value !== '.'
         ) r[key] = value
         else r[key] = r[key] + value;
+        console.log(r);
         return setInput();
     }
     const clear = key => {
@@ -118,7 +131,6 @@ if(calculator && input && result) {
             previousVal(key) == 0
         ) return;
 
-        console.log(`value: ${value},`, `current key: ${key},`);
         return setValue(key, value);
     }
     

@@ -24,7 +24,6 @@ if(calculator && input && result) {
         return setInput();
     }
     const reset = (value = 0) => {
-        console.log('from reset function', value);
         r.a = String(value);
         r.b = r.c = '';
 
@@ -85,7 +84,7 @@ if(calculator && input && result) {
             value !== '.'
         ) r[key] = value
         else r[key] = r[key] + value;
-        console.log(r);
+        
         return setInput();
     }
     const clear = key => {
@@ -136,11 +135,6 @@ if(calculator && input && result) {
         
         return isCalculated() ? reset(value) : setValue(key, value);
     }
-    
-    
-    
-    
-    
     
     if(btns) {
         btns.forEach(btn => {
